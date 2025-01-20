@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const port = 3000
 const mongoose = require('mongoose');
-// const {dishSuggestionSchema} = require('./schemas.js')
+const {dishSuggestionSchema} = require("./schemas");
 
 // TODO: Put schema into separate file export it
 
@@ -15,30 +15,6 @@ app.use(function(req, res, next) {
       'Access-Control-Allow-Headers', 'X-Requested-With,content-type');
   next();
 })
-
-const dishSuggestionSchema = new mongoose.Schema({
-  name: String,
-  celiacStatus: Boolean,
-  dairyStatus: Boolean,
-  halalStatus: Boolean,
-  ketoStatus: Boolean,
-  kosherStatus: Boolean,
-  fodmapStatus: Boolean,
-  paleoStatus: Boolean,
-  pescetarianStatus: Boolean,
-  veganStatus: Boolean,
-  vegetarianStatus: Boolean,
-  eggsAlergStatus: Boolean,
-  milkAlergStatus: Boolean,
-  mustardAlergStatus: Boolean,
-  nutAlergStatus: Boolean,
-  fishAlergStatus: Boolean,
-  sesameAlergStatus: Boolean,
-  soyAlergStatus: Boolean,
-  wheatAlergStatus: Boolean,
-  shellfishAlergStatus: Boolean,
-  pictureUrl: String,
-});
 
 const dishesItem = mongoose.model('dishesItem', dishSuggestionSchema);
 
