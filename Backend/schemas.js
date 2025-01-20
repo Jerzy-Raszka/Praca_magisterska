@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-export const dishSuggestionSchema = new mongoose.Schema({
+const dishSuggestionSchema = new mongoose.Schema({
   name: String,
   celiacStatus: Boolean,
   dairyStatus: Boolean,
@@ -23,3 +23,6 @@ export const dishSuggestionSchema = new mongoose.Schema({
   shellfishAlergStatus: Boolean,
   pictureUrl: String,
 });
+
+
+module.exports = {dishSuggestionSchema}
