@@ -24,5 +24,5 @@ const dishSuggestionSchema = new mongoose.Schema({
   pictureUrl: String,
 });
 
-
-module.exports = {dishSuggestionSchema}
+const dishesItem = mongoose.model('dishesItem', dishSuggestionSchema);
+module.exports = dishesItem;
