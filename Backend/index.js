@@ -24,17 +24,17 @@ app.post('/dishes', async (req, res) => {
   res.send(newDishesItem)
 });
 
-// app.put('/dishes', async (req, res) => {
-//   console.log(req.body);
-//   await dishesItem.findByIdAndUpdate(
-//       {_id: req.body._id}, {name: req.body.name, status: req.body.status})
-//   res.send(await dishesItem.find({}))
-// })
+app.put('/dishes', async (req, res) => {
+  console.log(req.body)
+  await dishesItem.findByIdAndUpdate(
+      {_id: req.body._id}, req.body)
+  res.send(await dishesItem.find({}))
+})
 
-// app.delete('/dishes', async (req, res) => {
-//     await dishesItem.findByIdAndDelete({_id: req.body._id})
-//     res.send(await dishesItem.find({}))
-// })
+  // app.delete('/dishes', async (req, res) => {
+  //     await dishesItem.findByIdAndDelete({_id: req.body._id})
+  //     res.send(await dishesItem.find({}))
+  // })
 
-app.listen(
-    port, () => {console.log(`Listening on port http://localhost:${port}`)})
+  app.listen(
+      port, () => {console.log(`Listening on port http://localhost:${port}`)})
