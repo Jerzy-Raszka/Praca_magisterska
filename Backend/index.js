@@ -31,10 +31,10 @@ app.put('/dishes', async (req, res) => {
   res.send(await dishesItem.find({}))
 })
 
-  // app.delete('/dishes', async (req, res) => {
-  //     await dishesItem.findByIdAndDelete({_id: req.body._id})
-  //     res.send(await dishesItem.find({}))
-  // })
+app.delete('/dishes', async (req, res) => {
+  await dishesItem.findByIdAndDelete({_id: req.body._id})
+  res.send(await dishesItem.find({}))
+})
 
   app.listen(
       port, () => {console.log(`Listening on port http://localhost:${port}`)})
