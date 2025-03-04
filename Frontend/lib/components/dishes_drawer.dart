@@ -13,7 +13,7 @@ class DishesDrawer extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: <Widget>[
             SizedBox(
-              height: 89,
+              height: 116.3,
               child: DrawerHeader(
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 149, 35, 35),
@@ -27,7 +27,6 @@ class DishesDrawer extends StatelessWidget {
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ),
             ),
@@ -84,7 +83,7 @@ class DishesDrawer extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(12, 160, 12, 160),
+              padding: const EdgeInsets.fromLTRB(12, 80, 12, 80),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(30.0),
                 child: Container(

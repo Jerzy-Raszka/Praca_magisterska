@@ -19,7 +19,6 @@ class DishesAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       backgroundColor: Color.fromARGB(255, 149, 35, 35),
-      elevation: 0.0,
       centerTitle: true,
     );
   }
