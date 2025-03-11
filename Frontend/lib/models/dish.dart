@@ -15,7 +15,7 @@ class Dish {
   final bool vegetablesTag;
   final bool chesseTag;
   final bool fruitTag;
-  final bool pictureUrl;
+  final String pictureUrl;
 
   const Dish({
     required this.name,

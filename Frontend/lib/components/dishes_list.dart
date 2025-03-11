@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/dish.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -11,7 +12,7 @@ class DishesList extends StatefulWidget {
 }
 
 class _DishesList extends State<DishesList> {
-  List<String> dishesName = [];
+  List<Dish> dishesData = [];
 
   @override
   void initState() {
@@ -25,7 +26,10 @@ class _DishesList extends State<DishesList> {
     );
     if (response.statusCode == 200) {
       final decodedJson = jsonDecode(response.body);
-      //TODO: put json into list for future use in widgets
+      setState(() {
+        dishesData =
+            decodedJson.map<Dish>((item) => Dish.fromJson(item)).toList();
+      });
     } else {
       throw Exception('Failed to fetch data');
     }
@@ -35,9 +39,9 @@ class _DishesList extends State<DishesList> {
   @override
   Widget build(BuildContext context) {
     return Text(
-      'name',
+      dishesData.isEmpty ? 'name' : dishesData[1].name,
       style: GoogleFonts.roboto(
-        textStyle: TextStyle(color: Color.fromARGB(255, 255, 245, 228)),
+        textStyle: TextStyle(color: Color.fromARGB(255, 15, 245, 228)),
         fontSize: 24,
         fontWeight: FontWeight.bold,
       ),
