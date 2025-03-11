@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/dish.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -35,16 +34,14 @@ class _DishesList extends State<DishesList> {
     }
   }
 
-  //TODO: widget factory that build depending on fetched data
+  //TODO: widget factory that build widget for dishes
   @override
   Widget build(BuildContext context) {
-    return Text(
-      dishesData.isEmpty ? 'name' : dishesData[1].name,
-      style: GoogleFonts.roboto(
-        textStyle: TextStyle(color: Color.fromARGB(255, 15, 245, 228)),
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
-      ),
+    return ListView.builder(
+      itemCount: dishesData.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Card(child: ListTile(title: Text(dishesData[index].name)));
+      },
     );
   }
 }
