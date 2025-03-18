@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/dish_dialog.dart';
 import 'package:frontend/models/dish.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -21,9 +20,10 @@ class _DishesList extends State<DishesList> {
     _fetchData();
   }
 
+  //192.168.0.10 -Gli || 192.168.3.4 -Cis
   void _fetchData() async {
     final response = await http.get(
-      Uri.parse('http://192.168.3.4:3000/dishes'), //192.168.0.10
+      Uri.parse('http://192.168.0.10:3000/dishes'),
     );
     if (response.statusCode == 200) {
       final decodedJson = jsonDecode(response.body);
@@ -43,9 +43,7 @@ class _DishesList extends State<DishesList> {
       itemCount: dishesData.length,
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
-          onTap: () {
-            DishDialog();
-          },
+          onTap: () => _dishDialog(context, index),
           child: Center(
             child: Container(
               margin: EdgeInsets.all(5),
@@ -121,6 +119,71 @@ class _DishesList extends State<DishesList> {
               ),
             ),
           ),
+        );
+      },
+    );
+  }
+
+  //TODO: add delete/sub button and design of dialog
+
+  Future<void> _dishDialog(BuildContext context, int index) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Text(dishesData[index].name),
+          children: <Widget>[
+            Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.all(5),
+                  height: 170,
+                  width: MediaQuery.sizeOf(context).width * 0.8,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(dishesData[index].pictureUrl),
+                      fit: BoxFit.fill,
+                    ),
+                    border: Border.all(
+                      width: 3,
+                      color: const Color.fromARGB(255, 255, 245, 228),
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    color: const Color.fromARGB(255, 255, 245, 228),
+                  ),
+                ),
+                Wrap(
+                  spacing: 8.0,
+                  runSpacing: 4.0,
+                  children: <Widget>[
+                    if (dishesData[index].porkTag)
+                      Chip(label: Text('#wieprzowina')),
+                    if (dishesData[index].beefTag)
+                      Chip(label: Text('#wołowina')),
+                    if (dishesData[index].chickenTag)
+                      Chip(label: Text('#kurczak')),
+                    if (dishesData[index].eggTag) Chip(label: Text('#jajka')),
+                    if (dishesData[index].fishTag) Chip(label: Text('#ryba')),
+                    if (dishesData[index].shellfishTag)
+                      Chip(label: Text('#skorupiaki')),
+                    if (dishesData[index].tofuTag) Chip(label: Text('#tofu')),
+                    if (dishesData[index].pastaTag)
+                      Chip(label: Text('#makaron')),
+                    if (dishesData[index].riceTag) Chip(label: Text('#ryż')),
+                    if (dishesData[index].groatsTag)
+                      Chip(label: Text('#kasza')),
+                    if (dishesData[index].soupTag) Chip(label: Text('#zupa')),
+                    if (dishesData[index].saladTag)
+                      Chip(label: Text('#sałatka')),
+                    if (dishesData[index].vegetablesTag)
+                      Chip(label: Text('#warzywa')),
+                    if (dishesData[index].chesseTag) Chip(label: Text('#ser')),
+                    if (dishesData[index].fruitTag) Chip(label: Text('#owoce')),
+                  ],
+                ),
+              ],
+            ),
+          ],
         );
       },
     );
