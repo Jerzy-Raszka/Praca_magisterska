@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/components/dishes_tag.dart';
 import 'package:frontend/models/dish.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -124,7 +125,7 @@ class _DishesList extends State<DishesList> {
     );
   }
 
-  //TODO: button del/sub and calling diffrent functions, change ifs into new class that is called with tag
+  //TODO: button del/sub and calling diffrent functions
 
   Future<void> _dishDialog(BuildContext context, int index) {
     return showDialog<void>(
@@ -174,290 +175,28 @@ class _DishesList extends State<DishesList> {
                       runSpacing: 4.0,
                       children: <Widget>[
                         if (dishesData[index].porkTag)
-                          Chip(
-                            backgroundColor: const Color.fromARGB(
-                              77,
-                              149,
-                              35,
-                              35,
-                            ),
-                            label: Text(
-                              '#wieprzowina',
-                              style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                                  color: const Color.fromARGB(255, 149, 35, 35),
-                                ),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+                          DishesTag(tag: "Wieprzowina"),
                         if (dishesData[index].beefTag)
-                          Chip(
-                            backgroundColor: const Color.fromARGB(
-                              77,
-                              149,
-                              35,
-                              35,
-                            ),
-                            label: Text(
-                              '#wołowina',
-                              style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                                  color: const Color.fromARGB(255, 149, 35, 35),
-                                ),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+                          DishesTag(tag: "Wołowina"),
                         if (dishesData[index].chickenTag)
-                          Chip(
-                            backgroundColor: const Color.fromARGB(
-                              77,
-                              149,
-                              35,
-                              35,
-                            ),
-                            label: Text(
-                              '#kurczak',
-                              style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                                  color: const Color.fromARGB(255, 149, 35, 35),
-                                ),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        if (dishesData[index].eggTag)
-                          Chip(
-                            backgroundColor: const Color.fromARGB(
-                              77,
-                              149,
-                              35,
-                              35,
-                            ),
-                            label: Text(
-                              '#jajka',
-                              style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                                  color: const Color.fromARGB(255, 149, 35, 35),
-                                ),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        if (dishesData[index].fishTag)
-                          Chip(
-                            backgroundColor: const Color.fromARGB(
-                              77,
-                              149,
-                              35,
-                              35,
-                            ),
-                            label: Text(
-                              '#ryba',
-                              style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                                  color: const Color.fromARGB(255, 149, 35, 35),
-                                ),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+                          DishesTag(tag: "Kurczak"),
+                        if (dishesData[index].eggTag) DishesTag(tag: "Jajka"),
+                        if (dishesData[index].fishTag) DishesTag(tag: "Ryba"),
                         if (dishesData[index].shellfishTag)
-                          Chip(
-                            backgroundColor: const Color.fromARGB(
-                              77,
-                              149,
-                              35,
-                              35,
-                            ),
-                            label: Text(
-                              '#skorupiaki',
-                              style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                                  color: const Color.fromARGB(255, 149, 35, 35),
-                                ),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        if (dishesData[index].tofuTag)
-                          Chip(
-                            backgroundColor: const Color.fromARGB(
-                              77,
-                              149,
-                              35,
-                              35,
-                            ),
-                            label: Text(
-                              '#tofu',
-                              style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                                  color: const Color.fromARGB(255, 149, 35, 35),
-                                ),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+                          DishesTag(tag: "Skorupiaki"),
+                        if (dishesData[index].tofuTag) DishesTag(tag: "Tofu"),
                         if (dishesData[index].pastaTag)
-                          Chip(
-                            backgroundColor: const Color.fromARGB(
-                              77,
-                              149,
-                              35,
-                              35,
-                            ),
-                            label: Text(
-                              '#makaron',
-                              style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                                  color: const Color.fromARGB(255, 149, 35, 35),
-                                ),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        if (dishesData[index].riceTag)
-                          Chip(
-                            backgroundColor: const Color.fromARGB(
-                              77,
-                              149,
-                              35,
-                              35,
-                            ),
-                            label: Text(
-                              '#ryż',
-                              style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                                  color: const Color.fromARGB(255, 149, 35, 35),
-                                ),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+                          DishesTag(tag: "Makaron"),
+                        if (dishesData[index].riceTag) DishesTag(tag: "Ryż"),
                         if (dishesData[index].groatsTag)
-                          Chip(
-                            backgroundColor: const Color.fromARGB(
-                              77,
-                              149,
-                              35,
-                              35,
-                            ),
-                            label: Text(
-                              '#kasza',
-                              style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                                  color: const Color.fromARGB(255, 149, 35, 35),
-                                ),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        if (dishesData[index].soupTag)
-                          Chip(
-                            backgroundColor: const Color.fromARGB(
-                              77,
-                              149,
-                              35,
-                              35,
-                            ),
-                            label: Text(
-                              '#zupa',
-                              style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                                  color: const Color.fromARGB(255, 149, 35, 35),
-                                ),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+                          DishesTag(tag: "Kasza"),
+                        if (dishesData[index].soupTag) DishesTag(tag: "Zupa"),
                         if (dishesData[index].saladTag)
-                          Chip(
-                            backgroundColor: const Color.fromARGB(
-                              77,
-                              149,
-                              35,
-                              35,
-                            ),
-                            label: Text(
-                              '#sałatka',
-                              style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                                  color: const Color.fromARGB(255, 149, 35, 35),
-                                ),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+                          DishesTag(tag: "Sałatka"),
                         if (dishesData[index].vegetablesTag)
-                          Chip(
-                            backgroundColor: const Color.fromARGB(
-                              77,
-                              149,
-                              35,
-                              35,
-                            ),
-                            label: Text(
-                              '#warzywa',
-                              style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                                  color: const Color.fromARGB(255, 149, 35, 35),
-                                ),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        if (dishesData[index].chesseTag)
-                          Chip(
-                            backgroundColor: const Color.fromARGB(
-                              77,
-                              149,
-                              35,
-                              35,
-                            ),
-                            label: Text(
-                              '#ser',
-                              style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                                  color: const Color.fromARGB(255, 149, 35, 35),
-                                ),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        if (dishesData[index].fruitTag)
-                          Chip(
-                            backgroundColor: const Color.fromARGB(
-                              77,
-                              149,
-                              35,
-                              35,
-                            ),
-                            label: Text(
-                              '#owoce',
-                              style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                                  color: const Color.fromARGB(255, 149, 35, 35),
-                                ),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+                          DishesTag(tag: "Warzywa"),
+                        if (dishesData[index].chesseTag) DishesTag(tag: "Ser"),
+                        if (dishesData[index].fruitTag) DishesTag(tag: "Owoce"),
                       ],
                     ),
                     Spacer(),
