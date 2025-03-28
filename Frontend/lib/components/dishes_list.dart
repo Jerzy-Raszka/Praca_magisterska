@@ -24,7 +24,7 @@ class _DishesList extends State<DishesList> {
   //192.168.0.10 -Gli || 192.168.3.4 -Cis
   void _fetchData() async {
     final response = await http.get(
-      Uri.parse('http://192.168.3.4:3000/dishes'),
+      Uri.parse('http://192.168.0.10:3000/dishes'),
     );
     if (response.statusCode == 200) {
       final decodedJson = jsonDecode(response.body);
