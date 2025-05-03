@@ -5,6 +5,7 @@ import 'package:frontend/components/dishes_list.dart';
 
 class RecommendedDishes extends StatelessWidget {
   const RecommendedDishes({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

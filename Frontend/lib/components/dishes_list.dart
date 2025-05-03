@@ -24,10 +24,10 @@ class _DishesList extends State<DishesList> {
     _fetchData();
   }
 
-  //192.168.0.10 -Gli || 192.168.3.4 -Cis
+  //192.168.0.10 -Gli || 192.168.94.2 -Cis
   void _fetchData() async {
     final response = await http.get(
-      Uri.parse('http://192.168.0.10:3000/dishes'),
+      Uri.parse('http://192.168.94.2:3000/dishes'),
     );
     if (response.statusCode == 200) {
       final decodedJson = jsonDecode(response.body);
@@ -50,7 +50,9 @@ class _DishesList extends State<DishesList> {
           child: Center(
             child: Container(
               margin: EdgeInsets.all(5),
-              width: MediaQuery.sizeOf(context).width * 0.9,
+              width: MediaQuery
+                  .sizeOf(context)
+                  .width * 0.9,
               height: 230,
               decoration: BoxDecoration(
                 border: Border.all(
@@ -65,7 +67,9 @@ class _DishesList extends State<DishesList> {
                   Container(
                     margin: EdgeInsets.all(5),
                     height: 170,
-                    width: MediaQuery.sizeOf(context).width * 0.8,
+                    width: MediaQuery
+                        .sizeOf(context)
+                        .width * 0.8,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(dishesData[index].pictureUrl),
@@ -84,7 +88,9 @@ class _DishesList extends State<DishesList> {
                       Center(
                         child: Container(
                           constraints: BoxConstraints(
-                            maxWidth: MediaQuery.sizeOf(context).width * 0.7,
+                            maxWidth: MediaQuery
+                                .sizeOf(context)
+                                .width * 0.7,
                           ),
                           padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
@@ -112,8 +118,8 @@ class _DishesList extends State<DishesList> {
                         alignment: Alignment.centerRight,
                         child: Icon(
                           widget.deleteOperation
-                              ? Icons.favorite
-                              : Icons.delete,
+                              ? Icons.delete
+                              : Icons.favorite,
                           size: 35,
                           color: const Color.fromARGB(255, 255, 245, 228),
                         ),
@@ -150,14 +156,20 @@ class _DishesList extends State<DishesList> {
             Padding(
               padding: const EdgeInsets.all(0),
               child: SizedBox(
-                height: MediaQuery.sizeOf(context).height * 0.6,
-                width: MediaQuery.sizeOf(context).width * 0.9,
+                height: MediaQuery
+                    .sizeOf(context)
+                    .height * 0.6,
+                width: MediaQuery
+                    .sizeOf(context)
+                    .width * 0.9,
                 child: Column(
                   children: [
                     Container(
                       margin: EdgeInsets.all(5),
                       height: 170,
-                      width: MediaQuery.sizeOf(context).width * 0.7,
+                      width: MediaQuery
+                          .sizeOf(context)
+                          .width * 0.7,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: NetworkImage(dishesData[index].pictureUrl),
@@ -205,7 +217,9 @@ class _DishesList extends State<DishesList> {
                     Container(
                       margin: EdgeInsets.all(5),
                       height: 50,
-                      width: MediaQuery.sizeOf(context).width * 0.6,
+                      width: MediaQuery
+                          .sizeOf(context)
+                          .width * 0.6,
                       decoration: BoxDecoration(
                         border: Border.all(
                           width: 3,
@@ -218,8 +232,8 @@ class _DishesList extends State<DishesList> {
                         //TODO: on click call delete or sub function
                         child: Text(
                           widget.deleteOperation
-                              ? "Dodaj do ulubionych"
-                              : "Usuń z ulubionych",
+                              ? "Usuń z ulubiobych"
+                              : "Dodaj do ulubionych",
                           style: GoogleFonts.roboto(
                             textStyle: TextStyle(
                               color: Color.fromARGB(255, 255, 245, 228),
