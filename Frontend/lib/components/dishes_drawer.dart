@@ -3,7 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class DishesDrawer extends StatelessWidget {
   const DishesDrawer({super.key});
-  //TODO: change to statefull and navigation on tap
+
+  //TODO: change to stateful and navigation on tap
   @override
   Widget build(BuildContext context) {
     return Drawer(
