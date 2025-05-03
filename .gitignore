@@ -1,35 +1,54 @@
-# Do not remove or rename entries in this file, only add new ones
-# See https://github.com/flutter/flutter/issues/128635 for more context.
-
-# This is dynamic in a monorepo
-bin/internal/engine.version
-
-# Miscellaneous
-*.class
+# Global ignores
+.DS_Store
+Thumbs.db
 *.lock
 *.log
-*.pyc
 *.swp
-.DS_Store
+*.swo
+*.class
+*.pyc
 .atom/
 .buildlog/
 .history
 .svn/
 
 # IntelliJ related
+.idea/
 *.iml
 *.ipr
 *.iws
-.idea/
 
-# Visual Studio Code related
+# VSCode
+.vscode/
+.vscode-test
 .classpath
 .project
 .settings/
-.vscode/*
 .ccls-cache
 
-# Flutter repo-specific
+# Flutter/Dart/Pub
+/Frontend/.dart_tool/
+/Frontend/.packages
+/Frontend/.flutter-plugins
+/Frontend/.flutter-plugins-dependencies
+/Frontend/build/
+.packages
+.packages.generated
+.pub/
+.pub-cache/
+.pub-preload-cache/
+.flutter-plugins
+.flutter-plugins-dependencies
+.dart_tool/
+**/generated_plugin_registrant.dart
+**/doc/api/
+flutter_*.png
+linked_*.ds
+unlinked.ds
+unlinked_spec.ds
+
+# Flutter specific (repo and ephemeral)
+bin/internal/engine.version
 /bin/cache/
 /bin/internal/bootstrap.bat
 /bin/internal/bootstrap.sh
@@ -49,26 +68,7 @@ bin/internal/engine.version
 version
 analysis_benchmark.json
 
-# packages file containing multi-root paths
-.packages.generated
-
-# Flutter/Dart/Pub related
-**/doc/api/
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-**/generated_plugin_registrant.dart
-.packages
-.pub-preload-cache/
-.pub-cache/
-.pub/
-build/
-flutter_*.png
-linked_*.ds
-unlinked.ds
-unlinked_spec.ds
-
-# Android related
+# Android
 **/android/**/gradle-wrapper.jar
 .gradle/
 **/android/captures/
@@ -79,7 +79,7 @@ unlinked_spec.ds
 **/android/key.properties
 *.jks
 
-# iOS/XCode related
+# iOS/Xcode
 **/ios/**/*.mode1v3
 **/ios/**/*.mode2v3
 **/ios/**/*.moved-aside
@@ -128,13 +128,82 @@ unlinked_spec.ds
 **/linux/flutter/generated_plugin_registrant.h
 **/linux/flutter/generated_plugins.cmake
 
+# Frontend (Flutter)
+# Already covered above
+
+# Backend (Node.js)
+/Backend/node_modules/
+/Backend/.env
+/Backend/.env.local
+/Backend/dist/
+/Backend/build/
+/Backend/npm-debug.log*
+/Backend/yarn-debug.log*
+/Backend/yarn-error.log*
+/Backend/.parcel-cache/
+/Backend/.turbo/
+
+# Node.js general
+node_modules/
+bower_components
+jspm_packages/
+web_modules/
+build/Release
+lib-cov
+*.tsbuildinfo
+*.tgz
+.yarn-integrity
+.pnpm-debug.log*
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Logs
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Runtime
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Tools caches
+.grunt
+.lock-wscript
+.nyc_output
+.cache
+.parcel-cache
+.nuxt
+.next
+.vuepress/dist
+.temp
+.docusaurus
+.serverless/
+.fusebox/
+.dynamodb/
+
+# Optional cache and history
+.npm
+.eslintcache
+.stylelintcache
+.node_repl_history
+
 # Coverage
 coverage/
-
-# Symbols
+*.lcov
+test-results/
 app.*.symbols
 
-# Exceptions to above rules.
+# Exceptions
 !**/ios/**/default.mode1v3
 !**/ios/**/default.mode2v3
 !**/ios/**/default.pbxuser

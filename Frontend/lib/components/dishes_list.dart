@@ -1,12 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:frontend/components/dishes_tag.dart';
 import 'package:frontend/models/dish.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class DishesList extends StatefulWidget {
-  const DishesList({super.key});
+  final bool deleteOperation;
+
+  const DishesList({super.key, required this.deleteOperation});
 
   @override
   State<DishesList> createState() => _DishesList();
@@ -37,7 +40,6 @@ class _DishesList extends State<DishesList> {
     }
   }
 
-  //TODO: depending on argument shows delete or subscribe and opens diffrent overlays
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -109,7 +111,9 @@ class _DishesList extends State<DishesList> {
                       Container(
                         alignment: Alignment.centerRight,
                         child: Icon(
-                          Icons.delete,
+                          widget.deleteOperation
+                              ? Icons.favorite
+                              : Icons.delete,
                           size: 35,
                           color: const Color.fromARGB(255, 255, 245, 228),
                         ),
@@ -124,8 +128,6 @@ class _DishesList extends State<DishesList> {
       },
     );
   }
-
-  //TODO: button del/sub and calling diffrent functions
 
   Future<void> _dishDialog(BuildContext context, int index) {
     return showDialog<void>(
@@ -213,8 +215,11 @@ class _DishesList extends State<DishesList> {
                         color: const Color.fromARGB(255, 149, 35, 35),
                       ),
                       child: Center(
+                        //TODO: on click call delete or sub function
                         child: Text(
-                          'Dodaj lub usuń',
+                          widget.deleteOperation
+                              ? "Dodaj do ulubionych"
+                              : "Usuń z ulubionych",
                           style: GoogleFonts.roboto(
                             textStyle: TextStyle(
                               color: Color.fromARGB(255, 255, 245, 228),

@@ -11,7 +11,7 @@ class RecommendedDishes extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 255, 245, 228),
       appBar: DishesAppBar(title: 'Polecane dania', appBar: AppBar()),
       drawer: DishesDrawer(),
-      body: DishesList(),
+      body: DishesList(deleteOperation: false),
     );
   }
 }
