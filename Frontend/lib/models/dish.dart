@@ -1,4 +1,5 @@
 class Dish {
+  final String id;
   final String name;
   final bool porkTag;
   final bool beefTag;
@@ -18,6 +19,7 @@ class Dish {
   final String pictureUrl;
 
   const Dish({
+    required this.id,
     required this.name,
     required this.porkTag,
     required this.beefTag,
@@ -38,6 +40,7 @@ class Dish {
   });
 
   factory Dish.fromJson(Map<String, dynamic> json) => Dish(
+    id: json["_id"],
     name: json["name"],
     porkTag: json["porkTag"],
     beefTag: json["beefTag"],
