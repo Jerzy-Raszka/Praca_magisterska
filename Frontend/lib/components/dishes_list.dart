@@ -30,11 +30,21 @@ class _DishesList extends State<DishesList> {
     final response = await http.get(
       Uri.parse('http://192.168.3.4:3000/dishes'),
     );
+    final prefs = await SharedPreferences.getInstance();
+    final savedDishesID = prefs.getKeys();
     if (response.statusCode == 200) {
       final decodedJson = jsonDecode(response.body);
       setState(() {
         dishesData =
             decodedJson.map<Dish>((item) => Dish.fromJson(item)).toList();
+
+        if (widget.deleteOperation) {
+          dishesData =
+              dishesData
+                  .where((dish) => savedDishesID.contains(dish.id))
+                  .toList();
+          print(dishesData);
+        }
       });
     } else {
       throw Exception('Failed to fetch data');
