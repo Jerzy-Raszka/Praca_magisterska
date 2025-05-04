@@ -43,7 +43,6 @@ class _DishesList extends State<DishesList> {
               dishesData
                   .where((dish) => savedDishesID.contains(dish.id))
                   .toList();
-          print(dishesData);
         }
       });
     } else {
