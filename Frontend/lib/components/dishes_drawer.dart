@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/components/recommended_dishes.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class DishesDrawer extends StatelessWidget {
+import 'liked_dishes.dart';
+
+class DishesDrawer extends StatefulWidget {
   const DishesDrawer({super.key});
 
-  //TODO: change to stateful and navigation on tap
+  @override
+  State<DishesDrawer> createState() => _DishesDrawerState();
+}
+
+class _DishesDrawerState extends State<DishesDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -31,26 +38,34 @@ class DishesDrawer extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 50, 12, 12),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(30.0),
-                child: Container(
-                  alignment: Alignment.center,
-                  constraints: const BoxConstraints(
-                    maxWidth: 300,
-                    maxHeight: 80,
-                  ),
-                  color: Color.fromARGB(255, 149, 35, 35),
-                  child: Center(
-                    child: Text(
-                      'Zapisane przepisy',
-                      style: GoogleFonts.roboto(
-                        textStyle: TextStyle(
-                          color: Color.fromARGB(255, 255, 245, 228),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LikedDishes()),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(12, 50, 12, 12),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30.0),
+                  child: Container(
+                    alignment: Alignment.center,
+                    constraints: const BoxConstraints(
+                      maxWidth: 300,
+                      maxHeight: 80,
+                    ),
+                    color: Color.fromARGB(255, 149, 35, 35),
+                    child: Center(
+                      child: Text(
+                        'Zapisane przepisy',
+                        style: GoogleFonts.roboto(
+                          textStyle: TextStyle(
+                            color: Color.fromARGB(255, 255, 245, 228),
+                          ),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -109,26 +124,36 @@ class DishesDrawer extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(30.0),
-                child: Container(
-                  alignment: Alignment.center,
-                  constraints: const BoxConstraints(
-                    maxWidth: 300,
-                    maxHeight: 80,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const RecommendedDishes(),
                   ),
-                  color: Color.fromARGB(255, 149, 35, 35),
-                  child: Center(
-                    child: Text(
-                      'Polecane przepisy',
-                      style: GoogleFonts.roboto(
-                        textStyle: TextStyle(
-                          color: Color.fromARGB(255, 255, 245, 228),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30.0),
+                  child: Container(
+                    alignment: Alignment.center,
+                    constraints: const BoxConstraints(
+                      maxWidth: 300,
+                      maxHeight: 80,
+                    ),
+                    color: Color.fromARGB(255, 149, 35, 35),
+                    child: Center(
+                      child: Text(
+                        'Polecane przepisy',
+                        style: GoogleFonts.roboto(
+                          textStyle: TextStyle(
+                            color: Color.fromARGB(255, 255, 245, 228),
+                          ),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),

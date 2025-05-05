@@ -61,6 +61,7 @@ class _DishesList extends State<DishesList> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       prefs.remove(dishesData[index].id);
+      dishesData.removeWhere((dish) => dish.id == dishesData[index].id);
     });
   }
 
