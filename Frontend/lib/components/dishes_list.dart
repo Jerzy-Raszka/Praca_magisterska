@@ -18,6 +18,7 @@ class DishesList extends StatefulWidget {
 
 class _DishesList extends State<DishesList> {
   List<Dish> dishesData = [];
+  late Set<String> savedDishesID;
 
   @override
   void initState() {
@@ -31,7 +32,7 @@ class _DishesList extends State<DishesList> {
       Uri.parse('http://192.168.3.4:3000/dishes'),
     );
     final prefs = await SharedPreferences.getInstance();
-    final savedDishesID = prefs.getKeys();
+    savedDishesID = prefs.getKeys();
     if (response.statusCode == 200) {
       final decodedJson = jsonDecode(response.body);
       setState(() {
@@ -54,6 +55,8 @@ class _DishesList extends State<DishesList> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       prefs.setString(dishesData[index].id, dishesData[index].id);
+      savedDishesID.add(dishesData[index].id);
+      Navigator.pop(context);
     });
   }
 
@@ -62,7 +65,16 @@ class _DishesList extends State<DishesList> {
     setState(() {
       prefs.remove(dishesData[index].id);
       dishesData.removeWhere((dish) => dish.id == dishesData[index].id);
+      Navigator.pop(context);
     });
+  }
+
+  bool _isLiked(int index) {
+    if (savedDishesID.contains(dishesData[index].id)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @override
@@ -133,16 +145,17 @@ class _DishesList extends State<DishesList> {
                           ),
                         ),
                       ),
-                      Container(
-                        alignment: Alignment.centerRight,
-                        child: Icon(
-                          widget.deleteOperation
-                              ? Icons.delete
-                              : Icons.favorite,
-                          size: 35,
-                          color: const Color.fromARGB(255, 255, 245, 228),
+                      if (!_isLiked(index) || widget.deleteOperation)
+                        Container(
+                          alignment: Alignment.centerRight,
+                          child: Icon(
+                            widget.deleteOperation
+                                ? Icons.delete
+                                : Icons.favorite,
+                            size: 35,
+                            color: const Color.fromARGB(255, 255, 245, 228),
+                          ),
                         ),
-                      ),
                     ],
                   ),
                 ],
@@ -227,41 +240,42 @@ class _DishesList extends State<DishesList> {
                       ],
                     ),
                     Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        //_getSavedDishes();
-                        widget.deleteOperation
-                            ? _deleteDish(index)
-                            : _saveDish(index);
-                      },
-                      child: Container(
-                        margin: EdgeInsets.all(5),
-                        height: 50,
-                        width: MediaQuery.sizeOf(context).width * 0.6,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 3,
+                    if (!_isLiked(index) || widget.deleteOperation)
+                      GestureDetector(
+                        onTap: () {
+                          widget.deleteOperation
+                              ? _deleteDish(index)
+                              : _saveDish(index);
+                        },
+
+                        child: Container(
+                          margin: EdgeInsets.all(5),
+                          height: 50,
+                          width: MediaQuery.sizeOf(context).width * 0.6,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 3,
+                              color: const Color.fromARGB(255, 149, 35, 35),
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
                             color: const Color.fromARGB(255, 149, 35, 35),
                           ),
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                          color: const Color.fromARGB(255, 149, 35, 35),
-                        ),
-                        child: Center(
-                          child: Text(
-                            widget.deleteOperation
-                                ? "Usuń z ulubiobych"
-                                : "Dodaj do ulubionych",
-                            style: GoogleFonts.roboto(
-                              textStyle: TextStyle(
-                                color: Color.fromARGB(255, 255, 245, 228),
+                          child: Center(
+                            child: Text(
+                              widget.deleteOperation
+                                  ? "Usuń z ulubiobych"
+                                  : "Dodaj do ulubionych",
+                              style: GoogleFonts.roboto(
+                                textStyle: TextStyle(
+                                  color: Color.fromARGB(255, 255, 245, 228),
+                                ),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
                               ),
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       ),
-                    ),
                   ],
                 ),
               ),
