@@ -29,7 +29,7 @@ class _DishesList extends State<DishesList> {
   //192.168.0.10 -Gli || 192.168.3.4 -Cis
   void _fetchData() async {
     final response = await http.get(
-      Uri.parse('http://192.168.3.4:3000/dishes'),
+      Uri.parse('http://192.168.0.10:3000/dishes'),
     );
     final prefs = await SharedPreferences.getInstance();
     savedDishesID = prefs.getKeys();
@@ -204,7 +204,7 @@ class _DishesList extends State<DishesList> {
                         ),
                         border: Border.all(
                           width: 3,
-                          color: const Color.fromARGB(255, 255, 245, 228),
+                          color: const Color.fromARGB(255, 149, 35, 35),
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                         color: const Color.fromARGB(255, 255, 245, 228),
