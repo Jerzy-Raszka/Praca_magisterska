@@ -248,7 +248,6 @@ class _DishesList extends State<DishesList> {
                               ? _deleteDish(index)
                               : _saveDish(index);
                         },
-
                         child: Container(
                           margin: EdgeInsets.all(5),
                           height: 50,

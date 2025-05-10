@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/dishes_clear_data.dart';
 import 'package:frontend/components/recommended_dishes.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'liked_dishes.dart';
 
@@ -14,6 +14,102 @@ class DishesDrawer extends StatefulWidget {
 
 class _DishesDrawerState extends State<DishesDrawer> {
   //TODO: change clearing data button to be more visible and on the bottom of drawer
+  //TODO: _removeData() navigate to preferences after "yes"
+
+  void _clearPref() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+  }
+
+  Future<void> _removeData() async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: const Color.fromARGB(255, 255, 245, 228),
+          title: Text(
+            'Czy napewno chcesz usunąc wszystkie dane?',
+            style: GoogleFonts.roboto(
+              textStyle: TextStyle(
+                color: const Color.fromARGB(255, 149, 35, 35),
+              ),
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: Container(height: 50),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  height: 50,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 3,
+                      color: const Color.fromARGB(255, 149, 35, 35),
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    color: const Color.fromARGB(255, 149, 35, 35),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      _clearPref();
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RecommendedDishes(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      "Tak",
+                      style: GoogleFonts.roboto(
+                        textStyle: TextStyle(
+                          color: const Color.fromARGB(255, 255, 245, 228),
+                        ),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 50,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 3,
+                      color: const Color.fromARGB(255, 149, 35, 35),
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    color: const Color.fromARGB(255, 149, 35, 35),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      "Nie",
+                      style: GoogleFonts.roboto(
+                        textStyle: TextStyle(
+                          color: const Color.fromARGB(255, 255, 245, 228),
+                        ),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -102,12 +198,7 @@ class _DishesDrawerState extends State<DishesDrawer> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const DishesClearData(),
-                  ),
-                );
+                _removeData();
               },
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(12, 80, 12, 80),
