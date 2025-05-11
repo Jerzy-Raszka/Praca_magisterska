@@ -1,28 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/dishes_allergen.dart';
 
-class DishesPreferences extends StatefulWidget {
+import 'diets_list.dart';
+import 'dishes_app_bar.dart';
+import 'dishes_drawer.dart';
+
+class DishesPreferences extends StatelessWidget {
   const DishesPreferences({super.key});
 
   @override
-  State<StatefulWidget> createState() => _DishesPreference();
-}
-
-//TODO: add drop-down list with diets to choose and saving data
-class _DishesPreference extends State<DishesPreferences> {
-  @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          Wrap(
-            children: [
-              //TODO: Add event listener that change value of allergen adn do for all 9
-              DishesAlergen(allergen: false, allergenName: 'marchewka'),
-            ],
-          ),
-        ],
-      ),
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 255, 245, 228),
+      appBar: DishesAppBar(title: 'Preferencje', appBar: AppBar()),
+      drawer: DishesDrawer(),
+      body: DietsList(),
     );
   }
 }

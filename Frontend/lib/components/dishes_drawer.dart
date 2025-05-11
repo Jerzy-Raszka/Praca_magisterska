@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/components/dishes_preferences.dart';
 import 'package:frontend/components/recommended_dishes.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -170,26 +171,36 @@ class _DishesDrawerState extends State<DishesDrawer> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(30.0),
-                child: Container(
-                  alignment: Alignment.center,
-                  constraints: const BoxConstraints(
-                    maxWidth: 300,
-                    maxHeight: 80,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const DishesPreferences(),
                   ),
-                  color: Color.fromARGB(255, 149, 35, 35),
-                  child: Center(
-                    child: Text(
-                      'Zmień preferencje',
-                      style: GoogleFonts.roboto(
-                        textStyle: TextStyle(
-                          color: Color.fromARGB(255, 255, 245, 228),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30.0),
+                  child: Container(
+                    alignment: Alignment.center,
+                    constraints: const BoxConstraints(
+                      maxWidth: 300,
+                      maxHeight: 80,
+                    ),
+                    color: Color.fromARGB(255, 149, 35, 35),
+                    child: Center(
+                      child: Text(
+                        'Zmień preferencje',
+                        style: GoogleFonts.roboto(
+                          textStyle: TextStyle(
+                            color: Color.fromARGB(255, 255, 245, 228),
+                          ),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),

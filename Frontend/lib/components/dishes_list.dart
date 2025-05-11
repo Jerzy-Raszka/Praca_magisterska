@@ -26,6 +26,8 @@ class _DishesList extends State<DishesList> {
     _fetchData();
   }
 
+  //TODO: getch only matching allergens and diet(backend)
+
   //192.168.0.10 -Gli || 192.168.3.4 -Cis
   void _fetchData() async {
     final response = await http.get(
