@@ -43,7 +43,6 @@ class _DishesAlergenState extends State<DishesAlergen> {
       ),
       onPressed: () {
         setState(() {
-          //TODO: add event that calls allergen name with new value
           isChecked = !isChecked;
         });
       },
