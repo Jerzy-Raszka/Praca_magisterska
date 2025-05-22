@@ -26,14 +26,16 @@ class _DishesList extends State<DishesList> {
     _fetchData();
   }
 
-  //TODO: getch only matching allergens and diet(backend)
+  //TODO: 1.fetch only diets that have correct diet as true and correct allergens as false
+  //TODO: 2.figure out what to do with saved dishes if they dont match new allergens
+  //TODO: 3.alert if leaving preferences without saving?
 
   //192.168.0.10 -Gli || 192.168.3.4 -Cis
   void _fetchData() async {
+    final prefs = await SharedPreferences.getInstance();
     final response = await http.get(
       Uri.parse('http://192.168.0.10:3000/dishes'),
     );
-    final prefs = await SharedPreferences.getInstance();
     savedDishesID = prefs.getKeys();
     if (response.statusCode == 200) {
       final decodedJson = jsonDecode(response.body);

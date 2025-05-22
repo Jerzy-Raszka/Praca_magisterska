@@ -15,7 +15,6 @@ class DishesDrawer extends StatefulWidget {
 
 class _DishesDrawerState extends State<DishesDrawer> {
   //TODO: change clearing data button to be more visible and on the bottom of drawer
-  //TODO: _removeData() navigate to preferences after "yes"
 
   void _clearPref() async {
     final prefs = await SharedPreferences.getInstance();
@@ -60,7 +59,7 @@ class _DishesDrawerState extends State<DishesDrawer> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const RecommendedDishes(),
+                          builder: (context) => const DishesPreferences(),
                         ),
                       );
                     },
