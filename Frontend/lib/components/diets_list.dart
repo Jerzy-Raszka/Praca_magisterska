@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/components/dishes_allergen.dart';
+import 'package:frontend/models/alergen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DietsList extends StatefulWidget {
   const DietsList({super.key});
@@ -10,16 +12,20 @@ class DietsList extends StatefulWidget {
 }
 
 class _DietsList extends State<DietsList> {
-  static const List<String> allergenList = <String>[
-    "Mleko krowie",
-    "Ryby",
-    "Sezam",
-    "Gorczyca",
-    "Pszczenica",
-    "Soja",
-    "Orzechy",
-    "Skorupiaki",
-    "Jajka",
+  List<Alergen> allergenList = [
+    Alergen(name: "milkAlergStatus", shownName: "Mleko krowie", status: false),
+    Alergen(name: "fishAlergStatus", shownName: "Ryby", status: false),
+    Alergen(name: "sesameAlergStatus", shownName: "Sezam", status: false),
+    Alergen(name: "mustardAlergStatus", shownName: "Gorczyca", status: false),
+    Alergen(name: "wheatAlergStatus", shownName: "Pszczenica", status: false),
+    Alergen(name: "soyAlergStatus", shownName: "Soja", status: false),
+    Alergen(name: "nutAlergStatus", shownName: "Orzechy", status: false),
+    Alergen(
+      name: "shellfishAlergStatus",
+      shownName: "Skorupiaki",
+      status: false,
+    ),
+    Alergen(name: "eggsAlergStatus", shownName: "Jajka", status: false),
   ];
 
   static const List<String> dietList = <String>[
@@ -40,11 +46,27 @@ class _DietsList extends State<DietsList> {
   @override
   void initState() {
     super.initState();
+    _getAlergens();
   }
 
-  //TODO: Allergen object that have name and value true/false
-  //TODO: Save to SharedPreferences all allergens with name as key and value true/false
-  //TODO: Save to SharedPreferences chosen diet with key diet
+  void _getAlergens() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      for (var allergen in allergenList) {
+        final value = prefs.getBool(allergen.name);
+        allergen.status = value ?? false;
+      }
+      dropdownValue = prefs.getString('diet') ?? dietList.first;
+    });
+  }
+
+  Future<void> _savePreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    for (var allergen in allergenList) {
+      await prefs.setBool(allergen.name, allergen.status);
+    }
+    await prefs.setString('diet', dropdownValue);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +129,7 @@ class _DietsList extends State<DietsList> {
             ),
           ),
         ),
-        Spacer(),
+        Container(height: 200),
         Text(
           "Lista alergenów:",
           style: GoogleFonts.roboto(
@@ -117,16 +139,48 @@ class _DietsList extends State<DietsList> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(22, 30, 22, 200),
+          padding: const EdgeInsets.fromLTRB(22, 30, 22, 130),
           child: Wrap(
             spacing: 5,
             runSpacing: 3,
             children: [
               ...allergenList.map(
-                (allergen) =>
-                    DishesAlergen(allergen: false, allergenName: allergen),
+                (allergen) => DishesAlergen(
+                  allergen: allergen.status,
+                  allergenName: allergen.shownName,
+                  onChanged: (newValue) {
+                    setState(() {
+                      allergen.status = newValue;
+                    });
+                  },
+                ),
               ),
             ],
+          ),
+        ),
+        Container(
+          height: 50,
+          width: 100,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 3,
+              color: const Color.fromARGB(255, 149, 35, 35),
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            color: const Color.fromARGB(255, 149, 35, 35),
+          ),
+          child: TextButton(
+            onPressed: () => _savePreferences(),
+            child: Text(
+              "Zapisz",
+              style: GoogleFonts.roboto(
+                textStyle: TextStyle(
+                  color: const Color.fromARGB(255, 255, 245, 228),
+                ),
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ),
       ],

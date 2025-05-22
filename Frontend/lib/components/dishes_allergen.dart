@@ -4,11 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 class DishesAlergen extends StatefulWidget {
   final bool allergen;
   final String allergenName;
+  final ValueChanged<bool> onChanged;
 
   const DishesAlergen({
     super.key,
     required this.allergen,
     required this.allergenName,
+    required this.onChanged,
   });
 
   @override
@@ -16,12 +18,11 @@ class DishesAlergen extends StatefulWidget {
 }
 
 class _DishesAlergenState extends State<DishesAlergen> {
-  late bool isChecked;
+  late bool isChecked = widget.allergen;
 
   @override
   void initState() {
     super.initState();
-    isChecked = widget.allergen;
   }
 
   @override
@@ -29,7 +30,7 @@ class _DishesAlergenState extends State<DishesAlergen> {
     return ActionChip(
       backgroundColor: const Color.fromARGB(77, 149, 35, 35),
       avatar: Icon(
-        isChecked ? Icons.check_box : Icons.check_box_outline_blank,
+        widget.allergen ? Icons.check_box : Icons.check_box_outline_blank,
         color: const Color.fromARGB(255, 149, 35, 35),
         size: 24,
       ),
@@ -45,6 +46,7 @@ class _DishesAlergenState extends State<DishesAlergen> {
         setState(() {
           isChecked = !isChecked;
         });
+        widget.onChanged(isChecked);
       },
     );
   }
