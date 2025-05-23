@@ -18,10 +18,18 @@ mongoose.connect(
     'mongodb+srv://Jirru:eQNToZhbNvEtI1cB@cluster0.hibixil.mongodb.net/Dishes?retryWrites=true&w=majority&appName=Cluster0')
 
 app.get('/dishes', async (req, res) => {
-    const filter = req.query.filter;
-    const query = filter ? {type: filter} : {};
-    const dishes = await dishesItem.find(query)
-    res.send(dishes)
+    const filters = req.query.filters; // filters = comma-separated string
+
+    let query = {};
+    if (filters) {
+        const keys = filters.split(',');
+        query = {
+            $and: keys.map((key) => ({[key]: true}))
+        };
+    }
+
+    const dishes = await dishesItem.find(query);
+    res.send(dishes);
 });
 
 app.post('/dishes', async (req, res) => {
