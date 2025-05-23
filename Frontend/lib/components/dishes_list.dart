@@ -34,7 +34,7 @@ class _DishesList extends State<DishesList> {
   void _fetchData() async {
     final prefs = await SharedPreferences.getInstance();
     final response = await http.get(
-      Uri.parse('http://192.168.0.10:3000/dishes'),
+      Uri.parse('http://192.168.3.4:3000/dishes'),
     );
     savedDishesID = prefs.getKeys();
     if (response.statusCode == 200) {
