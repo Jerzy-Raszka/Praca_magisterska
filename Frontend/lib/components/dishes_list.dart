@@ -26,8 +26,6 @@ class _DishesList extends State<DishesList> {
     _fetchPreferences();
   }
 
-  //TODO: 1.fis allergen, currently return if all are false
-  //TODO: 2.figure out what to do with saved dishes if they dont match new allergens
   //TODO: 3.alert if leaving preferences without saving?
 
   void _fetchPreferences() async {
