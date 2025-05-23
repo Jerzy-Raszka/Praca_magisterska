@@ -28,20 +28,21 @@ class _DietsList extends State<DietsList> {
     Alergen(name: "eggsAlergStatus", shownName: "Jajka", status: false),
   ];
 
-  static const List<String> dietList = <String>[
-    "Brak diety",
-    "Dieta bezglutenowa",
-    "Dieta bezlaktozowa",
-    "Dieta halal",
-    "Dieta keto",
-    "Dieta koszerna",
-    "Dieta FODMAP",
-    "Dieta paleo",
-    "Dieta peskatariańska",
-    "Dieta wegańska",
-    "Dieta wegetariańska",
-  ];
-  String dropdownValue = dietList.first;
+  static const Map<String, String> dietList = {
+    "Brak diety": "",
+    "Dieta bezglutenowa": "celiacStatus",
+    "Dieta bezlaktozowa": "dairyStatus",
+    "Dieta halal": "halalStatus",
+    "Dieta keto": "ketoStatus",
+    "Dieta koszerna": "kosherStatus",
+    "Dieta FODMAP": "fodmapStatus",
+    "Dieta paleo": "paleoStatus",
+    "Dieta peskatariańska": "pescetarianStatus",
+    "Dieta wegańska": "veganStatus",
+    "Dieta wegetariańska": "vegetarianStatus",
+  };
+  String dropdownValue = dietList.keys.first;
+  String? diet;
 
   @override
   void initState() {
@@ -56,7 +57,14 @@ class _DietsList extends State<DietsList> {
         final value = prefs.getBool(allergen.name);
         allergen.status = value ?? false;
       }
-      dropdownValue = prefs.getString('diet') ?? dietList.first;
+      diet = prefs.getString('diet');
+      dropdownValue =
+          dietList.entries
+              .firstWhere(
+                (entry) => entry.value == diet,
+                orElse: () => const MapEntry("Brak diety", "Brak diety"),
+              )
+              .key;
     });
   }
 
@@ -65,7 +73,7 @@ class _DietsList extends State<DietsList> {
     for (var allergen in allergenList) {
       await prefs.setBool(allergen.name, allergen.status);
     }
-    await prefs.setString('diet', dropdownValue);
+    await prefs.setString('diet', dietList[dropdownValue] ?? '');
   }
 
   @override
@@ -104,7 +112,7 @@ class _DietsList extends State<DietsList> {
                 value: dropdownValue,
                 elevation: 16,
                 items:
-                    dietList.map<DropdownMenuItem<String>>((String value) {
+                    dietList.keys.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(

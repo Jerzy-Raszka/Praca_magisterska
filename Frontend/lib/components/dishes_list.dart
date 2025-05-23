@@ -23,19 +23,37 @@ class _DishesList extends State<DishesList> {
   @override
   void initState() {
     super.initState();
-    _fetchData();
+    _fetchPreferences();
   }
 
-  //TODO: 1.fetch only diets that have correct diet as true and correct allergens as false
+  //TODO: 1.fis allergen, currently return if all are false
   //TODO: 2.figure out what to do with saved dishes if they dont match new allergens
   //TODO: 3.alert if leaving preferences without saving?
 
-  //192.168.0.10 -Gli || 192.168.3.4 -Cis
-  void _fetchData() async {
+  void _fetchPreferences() async {
     final prefs = await SharedPreferences.getInstance();
-    final response = await http.get(
-      Uri.parse('http://192.168.3.4:3000/dishes'),
-    );
+    final diet = prefs.getString('diet') ?? '';
+    final keys = prefs.getKeys();
+    List<String> allergens = [];
+
+    for (String key in keys) {
+      if (key.endsWith('AlergStatus') && prefs.getBool(key) == true) {
+        allergens.add(key);
+      }
+    }
+
+    _fetchData(diet, allergens);
+  }
+
+  //192.168.0.10 -Gli || 192.168.3.4 -Cis
+  void _fetchData(diet, allergens) async {
+    final prefs = await SharedPreferences.getInstance();
+    final uri = Uri.http('192.168.3.4:3000', '/dishes', {
+      'diets': diet,
+      'allergens': allergens.join(','),
+    });
+
+    final response = await http.get(uri);
     savedDishesID = prefs.getKeys();
     if (response.statusCode == 200) {
       final decodedJson = jsonDecode(response.body);

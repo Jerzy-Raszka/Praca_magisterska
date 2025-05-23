@@ -18,19 +18,22 @@ mongoose.connect(
     'mongodb+srv://Jirru:eQNToZhbNvEtI1cB@cluster0.hibixil.mongodb.net/Dishes?retryWrites=true&w=majority&appName=Cluster0')
 
 app.get('/dishes', async (req, res) => {
-    const filters = req.query.filters; // filters = comma-separated string
+    const diet = req.query.diets || '';
+    const allergenFilters = req.query.allergens?.split(',') || [];
 
-    let query = {};
-    if (filters) {
-        const keys = filters.split(',');
-        query = {
-            $and: keys.map((key) => ({[key]: true}))
-        };
-    }
+    const query = {
+        $and: [
+            ...(diet
+                ? [{[diet]: true}]
+                : []),
+            ...allergenFilters.map(key => ({[key]: {$ne: true}}))
+        ]
+    };
 
     const dishes = await dishesItem.find(query);
     res.send(dishes);
 });
+
 
 app.post('/dishes', async (req, res) => {
     const newDishesItem = await dishesItem.create(req.body);
