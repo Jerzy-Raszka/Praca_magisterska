@@ -140,11 +140,47 @@ class _DishesDrawerState extends State<DishesDrawer> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const LikedDishes()),
+                  MaterialPageRoute(
+                    builder: (context) => const RecommendedDishes(),
+                  ),
                 );
               },
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(12, 50, 12, 12),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30.0),
+                  child: Container(
+                    alignment: Alignment.center,
+                    constraints: const BoxConstraints(
+                      maxWidth: 300,
+                      maxHeight: 80,
+                    ),
+                    color: Color.fromARGB(255, 149, 35, 35),
+                    child: Center(
+                      child: Text(
+                        'Polecane przepisy',
+                        style: GoogleFonts.roboto(
+                          textStyle: TextStyle(
+                            color: Color.fromARGB(255, 255, 245, 228),
+                          ),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LikedDishes()),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(12, 30, 12, 12),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30.0),
                   child: Container(
@@ -180,7 +216,7 @@ class _DishesDrawerState extends State<DishesDrawer> {
                 );
               },
               child: Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.fromLTRB(12, 30, 12, 12),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30.0),
                   child: Container(
@@ -211,7 +247,7 @@ class _DishesDrawerState extends State<DishesDrawer> {
                 _removeData();
               },
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(12, 80, 12, 80),
+                padding: const EdgeInsets.fromLTRB(12, 230, 12, 80),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30.0),
                   child: Container(
@@ -224,42 +260,6 @@ class _DishesDrawerState extends State<DishesDrawer> {
                     child: Center(
                       child: Text(
                         'Usuń zapisane dane',
-                        style: GoogleFonts.roboto(
-                          textStyle: TextStyle(
-                            color: Color.fromARGB(255, 255, 245, 228),
-                          ),
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const RecommendedDishes(),
-                  ),
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(30.0),
-                  child: Container(
-                    alignment: Alignment.center,
-                    constraints: const BoxConstraints(
-                      maxWidth: 300,
-                      maxHeight: 80,
-                    ),
-                    color: Color.fromARGB(255, 149, 35, 35),
-                    child: Center(
-                      child: Text(
-                        'Polecane przepisy',
                         style: GoogleFonts.roboto(
                           textStyle: TextStyle(
                             color: Color.fromARGB(255, 255, 245, 228),
