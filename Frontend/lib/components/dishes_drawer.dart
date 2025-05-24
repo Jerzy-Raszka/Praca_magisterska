@@ -14,8 +14,6 @@ class DishesDrawer extends StatefulWidget {
 }
 
 class _DishesDrawerState extends State<DishesDrawer> {
-  //TODO: change clearing data button to be more visible and on the bottom of drawer
-
   void _clearPref() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();

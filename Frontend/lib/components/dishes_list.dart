@@ -26,7 +26,7 @@ class _DishesList extends State<DishesList> {
     _fetchPreferences();
   }
 
-  //TODO: 3.alert if leaving preferences without saving?
+  //TODO: Algorithm to sort dishes by tags  according to user saved dishes
 
   void _fetchPreferences() async {
     final prefs = await SharedPreferences.getInstance();
