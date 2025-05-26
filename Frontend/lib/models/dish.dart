@@ -17,8 +17,9 @@ class Dish {
   final bool chesseTag;
   final bool fruitTag;
   final String pictureUrl;
+  int totalTagWeight;
 
-  const Dish({
+  Dish({
     required this.id,
     required this.name,
     required this.porkTag,
@@ -37,6 +38,7 @@ class Dish {
     required this.chesseTag,
     required this.fruitTag,
     required this.pictureUrl,
+    this.totalTagWeight = 0,
   });
 
   factory Dish.fromJson(Map<String, dynamic> json) => Dish(

@@ -18,6 +18,23 @@ class DishesList extends StatefulWidget {
 
 class _DishesList extends State<DishesList> {
   List<Dish> dishesData = [];
+  Map<String, int> tagWeight = {
+    "porkTag": 0,
+    "beefTag": 0,
+    "chickenTag": 0,
+    "eggTag": 0,
+    "fishTag": 0,
+    "shellfishTag": 0,
+    "tofuTag": 0,
+    "pastaTag": 0,
+    "riceTag": 0,
+    "groatsTag": 0,
+    "soupTag": 0,
+    "saladTag": 0,
+    "vegetablesTag": 0,
+    "chesseTag": 0,
+    "fruitTag": 0,
+  };
   late Set<String> savedDishesID;
 
   @override
@@ -65,10 +82,92 @@ class _DishesList extends State<DishesList> {
                   .where((dish) => savedDishesID.contains(dish.id))
                   .toList();
         }
+
+        _countTagsDishes();
+        _countTotalTagWeight();
+        _sortDishes();
       });
     } else {
       throw Exception('Failed to fetch data');
     }
+  }
+
+  void _countTagsDishes() {
+    for (var dish in dishesData) {
+      if (savedDishesID.contains(dish.id)) {
+        if (dish.porkTag) {
+          tagWeight["porkTag"] = tagWeight["porkTag"]! + 1;
+        }
+        if (dish.beefTag) {
+          tagWeight["beefTag"] = tagWeight["beefTag"]! + 1;
+        }
+        if (dish.chickenTag) {
+          tagWeight["chickenTag"] = tagWeight["chickenTag"]! + 1;
+        }
+        if (dish.eggTag) {
+          tagWeight["eggTag"] = tagWeight["eggTag"]! + 1;
+        }
+        if (dish.fishTag) {
+          tagWeight["fishTag"] = tagWeight["fishTag"]! + 1;
+        }
+        if (dish.shellfishTag) {
+          tagWeight["shellfishTag"] = tagWeight["shellfishTag"]! + 1;
+        }
+        if (dish.tofuTag) {
+          tagWeight["tofuTag"] = tagWeight["tofuTag"]! + 1;
+        }
+        if (dish.pastaTag) {
+          tagWeight["pastaTag"] = tagWeight["pastaTag"]! + 1;
+        }
+        if (dish.riceTag) {
+          tagWeight["riceTag"] = tagWeight["riceTag"]! + 1;
+        }
+        if (dish.groatsTag) {
+          tagWeight["groatsTag"] = tagWeight["groatsTag"]! + 1;
+        }
+        if (dish.soupTag) {
+          tagWeight["soupTag"] = tagWeight["soupTag"]! + 1;
+        }
+        if (dish.saladTag) {
+          tagWeight["saladTag"] = tagWeight["saladTag"]! + 1;
+        }
+        if (dish.vegetablesTag) {
+          tagWeight["vegetablesTag"] = tagWeight["vegetablesTag"]! + 1;
+        }
+        if (dish.chesseTag) {
+          tagWeight["chesseTag"] = tagWeight["chesseTag"]! + 1;
+        }
+        if (dish.fruitTag) {
+          tagWeight["fruitTag"] = tagWeight["fruitTag"]! + 1;
+        }
+      }
+    }
+  }
+
+  void _countTotalTagWeight() {
+    for (var dish in dishesData) {
+      int weight = 0;
+      if (dish.porkTag) weight += tagWeight["porkTag"]!;
+      if (dish.beefTag) weight += tagWeight["beefTag"]!;
+      if (dish.chickenTag) weight += tagWeight["chickenTag"]!;
+      if (dish.eggTag) weight += tagWeight["eggTag"]!;
+      if (dish.fishTag) weight += tagWeight["fishTag"]!;
+      if (dish.shellfishTag) weight += tagWeight["shellfishTag"]!;
+      if (dish.tofuTag) weight += tagWeight["tofuTag"]!;
+      if (dish.pastaTag) weight += tagWeight["pastaTag"]!;
+      if (dish.riceTag) weight += tagWeight["riceTag"]!;
+      if (dish.groatsTag) weight += tagWeight["groatsTag"]!;
+      if (dish.soupTag) weight += tagWeight["soupTag"]!;
+      if (dish.saladTag) weight += tagWeight["saladTag"]!;
+      if (dish.vegetablesTag) weight += tagWeight["vegetablesTag"]!;
+      if (dish.chesseTag) weight += tagWeight["chesseTag"]!;
+      if (dish.fruitTag) weight += tagWeight["fruitTag"]!;
+      dish.totalTagWeight = weight;
+    }
+  }
+
+  void _sortDishes() {
+    dishesData.sort((a, b) => b.totalTagWeight.compareTo(a.totalTagWeight));
   }
 
   Future<void> _saveDish(int index) async {
