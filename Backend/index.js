@@ -53,6 +53,6 @@ app.delete('/dishes', async (req, res) => {
 })
 
 app.listen(
-    port, () => {
+    port, '0.0.0.0', () => {
         console.log(`Listening on port http://localhost:${port}`)
     })

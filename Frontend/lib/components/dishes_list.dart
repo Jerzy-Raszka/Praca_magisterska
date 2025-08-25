@@ -43,8 +43,6 @@ class _DishesList extends State<DishesList> {
     _fetchPreferences();
   }
 
-  //TODO: Algorithm to sort dishes by tags  according to user saved dishes
-
   void _fetchPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     final diet = prefs.getString('diet') ?? '';
