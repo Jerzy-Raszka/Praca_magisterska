@@ -58,35 +58,73 @@ class _DishesList extends State<DishesList> {
     _fetchData(diet, allergens);
   }
 
-  //192.168.0.10 -Gli || 192.168.3.4 -Cis
+  //188.245.110.118 -VPS || 192.168.3.4:3000 -Cis
+  bool _isLoading = false;
+  String? _errorMessage;
+
   void _fetchData(diet, allergens) async {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
     final prefs = await SharedPreferences.getInstance();
     final uri = Uri.http('192.168.3.4:3000', '/dishes', {
       'diets': diet,
       'allergens': allergens.join(','),
     });
 
-    final response = await http.get(uri);
-    savedDishesID = prefs.getKeys();
-    if (response.statusCode == 200) {
-      final decodedJson = jsonDecode(response.body);
-      setState(() {
-        dishesData =
-            decodedJson.map<Dish>((item) => Dish.fromJson(item)).toList();
+    int retryCount = 0;
+    const int maxRetries = 3;
+    const Duration retryDelay = Duration(seconds: 1);
 
-        if (widget.deleteOperation) {
-          dishesData =
-              dishesData
-                  .where((dish) => savedDishesID.contains(dish.id))
-                  .toList();
+    while (retryCount < maxRetries) {
+      try {
+        final response = await http.get(uri).timeout(Duration(seconds: 2));
+        savedDishesID = prefs.getKeys();
+        if (response.statusCode == 200) {
+          final decodedJson = jsonDecode(response.body);
+          setState(() {
+            dishesData =
+                decodedJson.map<Dish>((item) => Dish.fromJson(item)).toList();
+
+            if (widget.deleteOperation) {
+              dishesData =
+                  dishesData
+                      .where((dish) => savedDishesID.contains(dish.id))
+                      .toList();
+            }
+
+            _countTagsDishes();
+            _countTotalTagWeight();
+            _sortDishes();
+            _isLoading = false;
+            _errorMessage = null;
+          });
+          return;
+        } else {
+          retryCount++;
+          if (retryCount >= maxRetries) {
+            setState(() {
+              _isLoading = false;
+              _errorMessage =
+                  'Failed to fetch data (status ${response.statusCode})';
+            });
+          } else {
+            await Future.delayed(retryDelay);
+          }
         }
-
-        _countTagsDishes();
-        _countTotalTagWeight();
-        _sortDishes();
-      });
-    } else {
-      throw Exception('Failed to fetch data');
+      } catch (e) {
+        retryCount++;
+        if (retryCount >= maxRetries) {
+          setState(() {
+            _isLoading = false;
+            _errorMessage = 'Failed to connect to server.';
+          });
+        } else {
+          await Future.delayed(retryDelay);
+        }
+      }
     }
   }
 
@@ -192,6 +230,48 @@ class _DishesList extends State<DishesList> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return Center(child: CircularProgressIndicator(color: Colors.red));
+    }
+    if (_errorMessage != null) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              _errorMessage!,
+              style: GoogleFonts.roboto(
+                textStyle: TextStyle(color: Color.fromARGB(255, 149, 35, 35)),
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+            SizedBox(height: 16),
+            TextButton(
+              onPressed: _fetchPreferences,
+              style: ButtonStyle(
+                padding: WidgetStatePropertyAll<EdgeInsets>(
+                  EdgeInsets.symmetric(horizontal: 42, vertical: 16),
+                ),
+                backgroundColor: WidgetStatePropertyAll<Color>(
+                  const Color.fromARGB(77, 149, 35, 35),
+                ),
+              ),
+              child: Text(
+                'Retry',
+                style: GoogleFonts.roboto(
+                  textStyle: TextStyle(color: Color.fromARGB(255, 149, 35, 35)),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
     return PopScope(
       canPop: false,
       child: ListView.builder(
