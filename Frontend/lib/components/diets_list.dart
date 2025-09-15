@@ -3,6 +3,7 @@ import 'package:frontend/components/dishes_allergen.dart';
 import 'package:frontend/models/alergen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:frontend/components/recommended_dishes.dart';
 
 class DietsList extends StatefulWidget {
   const DietsList({super.key});
@@ -74,6 +75,10 @@ class _DietsList extends State<DietsList> {
       await prefs.setBool(allergen.name, allergen.status);
     }
     await prefs.setString('diet', dietList[dropdownValue] ?? '');
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const RecommendedDishes()),
+    );
   }
 
   @override

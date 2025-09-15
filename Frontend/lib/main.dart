@@ -1,18 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/components/recommended_dishes.dart';
+import 'package:frontend/components/dishes_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  final diet = prefs.getString('diet');
+  final hasAllergens = prefs.getKeys().any(
+    (key) => key.endsWith('AlergStatus') && prefs.getBool(key) == true,
+  );
+
+  runApp(MyApp(showPreferences: diet == null || diet.isEmpty || !hasAllergens));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool showPreferences;
+  const MyApp({super.key, required this.showPreferences});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: RecommendedDishes(),
+      home:
+          showPreferences
+              ? const DishesPreferences()
+              : const RecommendedDishes(),
     );
   }
 }
