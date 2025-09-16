@@ -259,7 +259,7 @@ class _DishesList extends State<DishesList> {
                 ),
               ),
               child: Text(
-                'Retry',
+                'Ponów próbę',
                 style: GoogleFonts.roboto(
                   textStyle: TextStyle(color: Color.fromARGB(255, 149, 35, 35)),
                   fontSize: 16,
