@@ -10,7 +10,7 @@ class RecommendedDishes extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 245, 228),
-      appBar: DishesAppBar(title: 'Polecane dania', appBar: AppBar()),
+      appBar: DishesAppBar(title: 'Polecane potrawy', appBar: AppBar()),
       drawer: DishesDrawer(),
       body: DishesList(deleteOperation: false),
     );

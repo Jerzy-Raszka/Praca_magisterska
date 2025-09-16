@@ -10,7 +10,7 @@ class LikedDishes extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 245, 228),
-      appBar: DishesAppBar(title: 'Polubione dania', appBar: AppBar()),
+      appBar: DishesAppBar(title: 'Polubione potrawy', appBar: AppBar()),
       drawer: DishesDrawer(),
       body: DishesList(deleteOperation: true),
     );
