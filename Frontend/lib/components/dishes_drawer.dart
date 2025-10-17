@@ -190,7 +190,7 @@ class _DishesDrawerState extends State<DishesDrawer> {
                     color: Color.fromARGB(255, 149, 35, 35),
                     child: Center(
                       child: Text(
-                        'Zapisane potrawy',
+                        'Polubione potrawy',
                         style: GoogleFonts.roboto(
                           textStyle: TextStyle(
                             color: Color.fromARGB(255, 255, 245, 228),
