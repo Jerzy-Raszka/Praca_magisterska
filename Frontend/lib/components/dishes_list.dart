@@ -9,8 +9,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class DishesList extends StatefulWidget {
   final bool deleteOperation;
+  // Optional: initial data for tests or preview (if provided, network fetch is skipped)
+  final List<Dish>? initialData;
+  // Optional http client to allow injecting a MockClient in tests
+  final http.Client? httpClient;
 
-  const DishesList({super.key, required this.deleteOperation});
+  const DishesList({
+    super.key,
+    required this.deleteOperation,
+    this.initialData,
+    this.httpClient,
+  });
 
   @override
   State<DishesList> createState() => _DishesList();
@@ -40,7 +49,18 @@ class _DishesList extends State<DishesList> {
   @override
   void initState() {
     super.initState();
-    _fetchPreferences();
+    // Ensure savedDishesID is initialized to a non-null set to avoid null checks in builds
+    savedDishesID = <String>{};
+
+    // If initialData is provided (tests / preview), use it and skip network fetch
+    if (widget.initialData != null) {
+      dishesData = widget.initialData!;
+      _countTagsDishes();
+      _countTotalTagWeight();
+      _sortDishes();
+    } else {
+      _fetchPreferences();
+    }
   }
 
   void _fetchPreferences() async {
@@ -80,7 +100,8 @@ class _DishesList extends State<DishesList> {
 
     while (retryCount < maxRetries) {
       try {
-        final response = await http.get(uri).timeout(Duration(seconds: 2));
+        final client = widget.httpClient ?? http.Client();
+        final response = await client.get(uri).timeout(Duration(seconds: 2));
         savedDishesID = prefs.getKeys();
         if (response.statusCode == 200) {
           final decodedJson = jsonDecode(response.body);
@@ -299,10 +320,15 @@ class _DishesList extends State<DishesList> {
                       height: 170,
                       width: MediaQuery.sizeOf(context).width * 0.8,
                       decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(dishesData[index].pictureUrl),
-                          fit: BoxFit.fill,
-                        ),
+                        image:
+                            dishesData[index].pictureUrl.isNotEmpty
+                                ? DecorationImage(
+                                  image: NetworkImage(
+                                    dishesData[index].pictureUrl,
+                                  ),
+                                  fit: BoxFit.fill,
+                                )
+                                : null,
                         border: Border.all(
                           width: 3,
                           color: const Color.fromARGB(255, 255, 245, 228),
@@ -395,10 +421,15 @@ class _DishesList extends State<DishesList> {
                       height: 170,
                       width: MediaQuery.sizeOf(context).width * 0.7,
                       decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(dishesData[index].pictureUrl),
-                          fit: BoxFit.fill,
-                        ),
+                        image:
+                            dishesData[index].pictureUrl.isNotEmpty
+                                ? DecorationImage(
+                                  image: NetworkImage(
+                                    dishesData[index].pictureUrl,
+                                  ),
+                                  fit: BoxFit.fill,
+                                )
+                                : null,
                         border: Border.all(
                           width: 3,
                           color: const Color.fromARGB(255, 149, 35, 35),
