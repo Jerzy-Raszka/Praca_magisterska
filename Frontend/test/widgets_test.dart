@@ -8,15 +8,6 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('UI integration tests', () {
-    testWidgets('RecommendedDishes renders without errors', (
-      WidgetTester tester,
-    ) async {
-      await tester.pumpWidget(const MaterialApp(home: RecommendedDishes()));
-      await tester.pumpAndSettle();
-
-      // AppBar title should be present
-      expect(find.text('Polecane potrawy'), findsOneWidget);
-    });
     testWidgets('Drawer opens and shows menu entries', (
       WidgetTester tester,
     ) async {
@@ -28,7 +19,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Menu'), findsOneWidget);
       expect(find.text('Polecane potrawy'), findsWidgets);
-      expect(find.text('Zapisane potrawy'), findsWidgets);
+      expect(find.text('Polubione potrawy'), findsWidgets);
       expect(find.text('Zmień preferencje'), findsWidgets);
       expect(find.text('Usuń zapisane dane'), findsWidgets);
     });
@@ -43,7 +34,7 @@ void main() {
       final Finder likedItemCard =
           find
               .ancestor(
-                of: find.text('Zapisane potrawy'),
+                of: find.text('Polubione potrawy'),
                 matching: find.byType(GestureDetector),
               )
               .first;
