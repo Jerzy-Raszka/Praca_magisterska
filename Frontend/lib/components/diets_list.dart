@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/dishes_allergen.dart';
-import 'package:frontend/models/alergen.dart';
+import 'dishes_allergen.dart';
+import '../models/alergen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:frontend/components/recommended_dishes.dart';
+import 'recommended_dishes.dart';
 
 class DietsList extends StatefulWidget {
   const DietsList({super.key});
@@ -83,120 +83,145 @@ class _DietsList extends State<DietsList> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 20.0),
-          child: Text(
-            "Wybrana dieta:",
-            style: GoogleFonts.roboto(
-              textStyle: TextStyle(
-                color: const Color.fromARGB(255, 149, 35, 35),
-              ),
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 30),
-          child: Center(
-            child: Container(
-              width: MediaQuery.sizeOf(context).width * 0.9,
-              padding: const EdgeInsets.all(3),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 5,
-                  color: const Color.fromARGB(255, 149, 35, 35),
+    // Make the whole form scrollable and use SafeArea so the "Zapisz" button
+    // is reachable on smaller screens. Avoid fixed large spacers.
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "Wybrana dieta:",
+              style: GoogleFonts.roboto(
+                textStyle: const TextStyle(
+                  color: Color.fromARGB(255, 149, 35, 35),
                 ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: DropdownButton(
-                dropdownColor: const Color.fromARGB(255, 255, 245, 228),
-                isExpanded: true,
-                value: dropdownValue,
-                elevation: 16,
-                items:
-                    dietList.keys.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: GoogleFonts.roboto(
-                            textStyle: TextStyle(
-                              color: Color.fromARGB(255, 149, 35, 35),
-                            ),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      );
-                    }).toList(),
-                onChanged: (String? value) {
-                  setState(() {
-                    dropdownValue = value!;
-                  });
-                },
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ),
-        ),
-        Container(height: 200),
-        Text(
-          "Lista alergenów:",
-          style: GoogleFonts.roboto(
-            textStyle: TextStyle(color: const Color.fromARGB(255, 149, 35, 35)),
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(22, 30, 22, 130),
-          child: Wrap(
-            spacing: 5,
-            runSpacing: 3,
-            children: [
-              ...allergenList.map(
-                (allergen) => DishesAlergen(
-                  allergen: allergen.status,
-                  allergenName: allergen.shownName,
-                  onChanged: (newValue) {
+
+            const SizedBox(height: 16),
+
+            Center(
+              child: Container(
+                width: MediaQuery.sizeOf(context).width * 0.9,
+                padding: const EdgeInsets.all(3),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 5,
+                    color: const Color.fromARGB(255, 149, 35, 35),
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: DropdownButton<String>(
+                  dropdownColor: const Color.fromARGB(255, 255, 245, 228),
+                  isExpanded: true,
+                  value: dropdownValue,
+                  elevation: 16,
+                  items:
+                      dietList.keys.map<DropdownMenuItem<String>>((
+                        String value,
+                      ) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: GoogleFonts.roboto(
+                              textStyle: const TextStyle(
+                                color: Color.fromARGB(255, 149, 35, 35),
+                              ),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        );
+                      }).toList(),
+                  onChanged: (String? value) {
                     setState(() {
-                      allergen.status = newValue;
+                      dropdownValue = value!;
                     });
                   },
                 ),
               ),
-            ],
-          ),
-        ),
-        Container(
-          height: 50,
-          width: 100,
-          decoration: BoxDecoration(
-            border: Border.all(
-              width: 3,
-              color: const Color.fromARGB(255, 149, 35, 35),
             ),
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-            color: const Color.fromARGB(255, 149, 35, 35),
-          ),
-          child: TextButton(
-            onPressed: () => _savePreferences(),
-            child: Text(
-              "Zapisz",
+
+            const SizedBox(height: 20),
+
+            Text(
+              "Lista alergenów:",
               style: GoogleFonts.roboto(
-                textStyle: TextStyle(
-                  color: const Color.fromARGB(255, 255, 245, 228),
+                textStyle: const TextStyle(
+                  color: Color.fromARGB(255, 149, 35, 35),
                 ),
-                fontSize: 16,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
-          ),
+
+            const SizedBox(height: 16),
+
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+              child: Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  ...allergenList.map(
+                    (allergen) => DishesAlergen(
+                      allergen: allergen.status,
+                      allergenName: allergen.shownName,
+                      onChanged: (newValue) {
+                        setState(() {
+                          allergen.status = newValue;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 24),
+
+            // Save button centered and with guaranteed padding so it stays visible
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                height: 50,
+                width: 140,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 3,
+                    color: const Color.fromARGB(255, 149, 35, 35),
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  color: const Color.fromARGB(255, 149, 35, 35),
+                ),
+                child: TextButton(
+                  onPressed: () => _savePreferences(),
+                  child: Text(
+                    "Zapisz",
+                    style: GoogleFonts.roboto(
+                      textStyle: const TextStyle(
+                        color: Color.fromARGB(255, 255, 245, 228),
+                      ),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            // Add bottom padding equal to safe area inset so button isn't covered by gesture/navigation bars
+            SizedBox(height: MediaQuery.of(context).viewPadding.bottom + 8),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/dishes_app_bar.dart';
-import 'package:frontend/components/dishes_drawer.dart';
-import 'package:frontend/components/dishes_list.dart';
+import 'dishes_app_bar.dart';
+import 'dishes_drawer.dart';
+import 'dishes_list.dart';
 
 class RecommendedDishes extends StatelessWidget {
   const RecommendedDishes({super.key});

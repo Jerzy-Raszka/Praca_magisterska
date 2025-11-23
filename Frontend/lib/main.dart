@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/recommended_dishes.dart';
-import 'package:frontend/components/dishes_preferences.dart';
+import 'components/recommended_dishes.dart';
+import 'components/dishes_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {

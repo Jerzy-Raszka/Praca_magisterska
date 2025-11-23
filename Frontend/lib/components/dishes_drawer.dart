@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/dishes_preferences.dart';
-import 'package:frontend/components/recommended_dishes.dart';
+import 'dishes_preferences.dart';
+import 'recommended_dishes.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -245,7 +245,7 @@ class _DishesDrawerState extends State<DishesDrawer> {
                 _removeData();
               },
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(12, 230, 12, 80),
+                padding: const EdgeInsets.fromLTRB(12, 130, 12, 80),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30.0),
                   child: Container(

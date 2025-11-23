@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:frontend/components/recommended_dishes.dart';
-import 'package:frontend/components/dishes_list.dart';
-import 'package:frontend/models/dish.dart';
+import 'package:FoodApp/components/recommended_dishes.dart';
+import 'package:FoodApp/components/dishes_list.dart';
+import 'package:FoodApp/models/dish.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

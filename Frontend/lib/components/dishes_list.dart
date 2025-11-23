@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:frontend/components/dishes_tag.dart';
-import 'package:frontend/models/dish.dart';
+import 'dishes_tag.dart';
+import '../models/dish.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -89,7 +89,7 @@ class _DishesList extends State<DishesList> {
     });
 
     final prefs = await SharedPreferences.getInstance();
-    final uri = Uri.http('192.168.3.4:3000', '/dishes', {
+    final uri = Uri.http('188.245.110.118', '/dishes', {
       'diets': diet,
       'allergens': allergens.join(','),
     });
